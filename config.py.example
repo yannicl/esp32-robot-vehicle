@@ -1,0 +1,22 @@
+# Configuration File for ota_update and mqtt
+
+wifi_config = {
+    'ssid':'',
+    'password':''
+}
+
+google_cloud_config = {
+    'project_id':'',
+    'cloud_region':'',
+    'registry_id':'',
+    'device_id':'',
+    'mqtt_bridge_hostname':'mqtt.googleapis.com',
+    'mqtt_bridge_port':8883
+}
+
+jwt_config = {
+    'algorithm':'RS256',
+    'token_ttl': 43200, #12 hours
+    # Use utiles/decode_rsa.py to decode private pem to pkcs1.
+    'private_key':()
+}

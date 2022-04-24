@@ -1,0 +1,7 @@
+# Secrets
+config.py
+*.pem
+
+# dev
+.vscode/
+*/__pycache__/
