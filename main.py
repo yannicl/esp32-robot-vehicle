@@ -1,18 +1,28 @@
-from machine import Pin, SoftI2C
-i2c = SoftI2C(scl=Pin(22), sda=Pin(21), freq=400000)
-i2c.scan()
+def connectToWifiAndUpdate():
+    import time, network, gc, config, machine
+    time.sleep(1)
+    print('Memory free', gc.mem_free())
 
-from third_party import VL53L0X
-tof = VL53L0X.VL53L0X(i2c)
+    from ota_update.ota_updater import OTAUpdater
 
-tof.set_Vcsel_pulse_period(tof.vcsel_period_type[0], 18)
+    sta_if = network.WLAN(network.STA_IF)
+    if not sta_if.isconnected():
+        print('connecting to network...')
+        sta_if.active(True)
+        sta_if.connect(config.wifi_config['ssid'], config.wifi_config['password'])
+        while not sta_if.isconnected():
+            pass
+    print('network config:', sta_if.ifconfig())
+    otaUpdater = OTAUpdater('https://github.com/yannicl/esp32-robot-vehicle', main_dir='app')
+    hasUpdated = otaUpdater.install_update_if_available()
+    if hasUpdated:
+        machine.reset()
+    else:
+        del(otaUpdater)
+        gc.collect()
 
-tof.set_Vcsel_pulse_period(tof.vcsel_period_type[1], 14)
+def startApp():
+    import app.start
 
-
-while True:
-# Start ranging
-    tof.start()
-    tof.read()
-    print(tof.read())
-    tof.stop()
+connectToWifiAndUpdate()
+startApp()
