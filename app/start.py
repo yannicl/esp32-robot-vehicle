@@ -17,6 +17,6 @@ tof.read()
 print(tof.read())
 tof.stop()
 
-from goplus2 import GoPlus2
+from app.goplus2 import GoPlus2
 motor = GoPlus2(i2c)
 motor.writeMotorASpeed(10000)
