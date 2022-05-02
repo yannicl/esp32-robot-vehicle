@@ -10,9 +10,13 @@ tof.set_Vcsel_pulse_period(tof.vcsel_period_type[0], 18)
 tof.set_Vcsel_pulse_period(tof.vcsel_period_type[1], 14)
 
 
-while True:
+#while True:
 # Start ranging
-    tof.start()
-    tof.read()
-    print(tof.read())
-    tof.stop()
+tof.start()
+tof.read()
+print(tof.read())
+tof.stop()
+
+from goplus2 import GoPlus2
+motor = GoPlus2(i2c)
+motor.writeMotorASpeed(10000)
