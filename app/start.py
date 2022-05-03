@@ -1,4 +1,5 @@
 from machine import Pin, SoftI2C
+import time
 i2c = SoftI2C(scl=Pin(22), sda=Pin(21), freq=400000)
 i2c.scan()
 
@@ -19,4 +20,7 @@ tof.stop()
 
 from app.goplus2 import GoPlus2
 motor = GoPlus2(i2c)
-motor.writeMotorASpeed(10000)
+#motor.writeMotorASpeed(10000)
+motor.writeServo1Angle(50)
+time.sleep(4)
+motor.writeServo1Angle(150)
