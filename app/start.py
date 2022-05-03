@@ -1,6 +1,6 @@
 from machine import Pin, SoftI2C
 import time
-i2c = SoftI2C(scl=Pin(22), sda=Pin(21), freq=400000)
+i2c = SoftI2C(scl=Pin(22), sda=Pin(21), freq=100000)
 i2c.scan()
 
 from third_party import VL53L0X
