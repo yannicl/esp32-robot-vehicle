@@ -20,7 +20,11 @@ tof.stop()
 
 from app.goplus2 import GoPlus2
 motor = GoPlus2(i2c)
-#motor.writeMotorASpeed(10000)
+motor.writeMotorASpeed(10000)
 motor.writeServo1Angle(50)
 time.sleep(4)
+motor.writeServo1Angle(0)
+motor.writeMotorASpeed(0)
+time.sleep(4)
 motor.writeServo1Angle(150)
+motor.writeMotorASpeed(-10000)

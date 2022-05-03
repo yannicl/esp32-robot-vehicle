@@ -3,8 +3,8 @@ class GoPlus2:
     GOPLUS_ADDR = 0x38
     MOTOR_NUM1 = 0x01
     MOTOR_NUM0 = 0x00
-    MOTOR_ADDR_0 = b'\0x30'
-    SERVO_ADDR_0 = b'\0x00'
+    MOTOR_ADDR_0 = b'\x30'
+    SERVO_ADDR_0 = b'\x00'
 
     def __init__(self, i2c):
         self.i2c = i2c
