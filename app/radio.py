@@ -6,7 +6,7 @@ class Radio:
     UDP_LOCAL_PORT   = 20935
 
     def __init__(self):
-        self.socket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     def send(self, message):
         if self.lastClientAddress:
