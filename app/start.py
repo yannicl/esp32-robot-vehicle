@@ -39,4 +39,7 @@ try:
 except Exception as err:
     from app.radio import Radio
     r = Radio()
-    r.send(json.dumps(err))
+    r.send(json.dumps({
+        'type': type(err),
+        'args': err.args
+    }))
