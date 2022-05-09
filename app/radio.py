@@ -9,7 +9,4 @@ class Radio:
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     def send(self, message):
-        if self.lastClientAddress:
-            self.socket.sendto(message, (self.localIP, self.UDP_LOCAL_PORT))
-
-
+        self.socket.sendto(message, (self.localIP, self.UDP_LOCAL_PORT))

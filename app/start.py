@@ -38,5 +38,5 @@ try:
 
 except Exception as err:
     from app.radio import Radio
-    radio = Radio()
-    radio.send(json.dump(err))
+    r = Radio()
+    r.send(json.dumps(err))
