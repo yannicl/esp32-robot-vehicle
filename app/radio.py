@@ -1,5 +1,4 @@
 import socket
-import string
 
 class Radio:
 
