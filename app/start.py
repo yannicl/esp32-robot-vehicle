@@ -1,8 +1,11 @@
 from machine import Pin, SoftI2C
 import time
 import json
+from app.radio import Radio
+r = Radio()
 
 try:
+    r.send("Hello")    
 
     i2c = SoftI2C(scl=Pin(22), sda=Pin(21), freq=100000)
     i2c.scan()
@@ -24,21 +27,19 @@ try:
 
     from app.goplus2 import GoPlus2
     motor = GoPlus2(i2c)
-    motor.writeMotorASpeed(10000)
-    motor.writeServo1Angle(50)
-    time.sleep(4)
-    motor.writeServo1Angle(0)
-    motor.writeMotorASpeed(0)
-    time.sleep(4)
-    motor.writeServo1Angle(150)
-    motor.writeMotorASpeed(-10000)
-    time.sleep(4)
-    motor.writeServo1Angle(0)
-    motor.writeMotorASpeed(0)
+
+    while True:
+        data = r.read()
+        print(data)
+        y = json.loads(data)
+        if y["motorA"]:
+            print(y["motorA"])
+            motor.writeMotorASpeed(y["motorA"])
+        if y["motorB"]:
+            motor.writeMotorBSpeed(y["motorB"])
 
 except Exception as err:
-    from app.radio import Radio
-    r = Radio()
+    
     r.send(json.dumps({
         'type': type(err),
         'args': err.args
