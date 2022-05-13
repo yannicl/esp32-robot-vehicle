@@ -11,14 +11,11 @@ class GoPlus2:
         self.i2c = i2c
 
     def writeMotorASpeed(self, motorSpeed:int):
-        self.i2c.writeto(self.GOPLUS_ADDR, self.MOTOR_ADDR_0 + self.to_bytes(motorSpeed))
+        self.i2c.writeto(self.GOPLUS_ADDR, self.MOTOR_ADDR_0 + motorSpeed.to_bytes(1, 'big'))
 
     def writeMotorBSpeed(self, motorSpeed:int):
-        self.i2c.writeto(self.GOPLUS_ADDR, self.MOTOR_ADDR_1 + self.to_bytes(motorSpeed))
+        self.i2c.writeto(self.GOPLUS_ADDR, self.MOTOR_ADDR_1 + motorSpeed.to_bytes(1, 'big'))
 
     def writeServo1Angle(self, angle: int):
         self.i2c.writeto(self.GOPLUS_ADDR, self.SERVO_ADDR_0 + angle.to_bytes(1, 'big'))
-
-    def to_bytes(self, x):
-        return bytes((x & 0xff))
 
