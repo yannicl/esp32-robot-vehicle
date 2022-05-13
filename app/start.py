@@ -32,10 +32,10 @@ try:
         data = r.read()
         print(data)
         y = json.loads(data)
-        if y["motorA"]:
+        if "motorA" in y:
             print(y["motorA"])
             motor.writeMotorASpeed(y["motorA"])
-        if y["motorB"]:
+        if "motorB" in y:
             motor.writeMotorBSpeed(y["motorB"])
 
 except Exception as err:
