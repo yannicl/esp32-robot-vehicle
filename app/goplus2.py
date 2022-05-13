@@ -19,7 +19,6 @@ class GoPlus2:
     def writeServo1Angle(self, angle: int):
         self.i2c.writeto(self.GOPLUS_ADDR, self.SERVO_ADDR_0 + angle.to_bytes(1, 'big'))
 
-    # to byte little endian signed
     def to_bytes(self, x):
-        return bytes(((x >> 8) & 0xff, x & 0xff))
+        return bytes((x & 0xff))
 
