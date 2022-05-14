@@ -4,43 +4,55 @@ import json
 from app.radio import Radio
 r = Radio()
 
-try:
-    r.send("Hello")    
+wdt = machine.WDT(timeout=60000)  # enable it with a timeout of 60s
 
-    i2c = SoftI2C(scl=Pin(22), sda=Pin(21), freq=100000)
-    i2c.scan()
+while True:
 
-    #from third_party import VL53L0X
-    #tof = VL53L0X.VL53L0X(i2c)
+    try:
+        r.send("Hello")    
 
-    #tof.set_Vcsel_pulse_period(tof.vcsel_period_type[0], 18)
+        i2c = SoftI2C(scl=Pin(22), sda=Pin(21), freq=100000)
+        i2c.scan()
 
-    #tof.set_Vcsel_pulse_period(tof.vcsel_period_type[1], 14)
+        #from third_party import VL53L0X
+        #tof = VL53L0X.VL53L0X(i2c)
+
+        #tof.set_Vcsel_pulse_period(tof.vcsel_period_type[0], 18)
+
+        #tof.set_Vcsel_pulse_period(tof.vcsel_period_type[1], 14)
 
 
-    #while True:
-    # Start ranging
-    #tof.start()
-    #tof.read()
-    #print(tof.read())
-    #tof.stop()
+        #while True:
+        # Start ranging
+        #tof.start()
+        #tof.read()
+        #print(tof.read())
+        #tof.stop()
 
-    from app.goplus2 import GoPlus2
-    motor = GoPlus2(i2c)
+        from app.goplus2 import GoPlus2
+        motor = GoPlus2(i2c)
 
-    while True:
-        data = r.read()
-        print(data)
-        y = json.loads(data)
-        if "motorA" in y:
-            print(y["motorA"])
-            motor.writeMotorASpeed(y["motorA"])
-        if "motorB" in y:
-            motor.writeMotorBSpeed(y["motorB"])
+        while True:
+            wdt.feed()
+            data = r.read()
+            print(data)
+            y = json.loads(data)
+            if "motorA" in y:
+                print(y["motorA"])
+                motor.writeMotorASpeed(y["motorA"])
+            else :
+                motor.writeMotorASpeed(0)
+            if "motorB" in y:
+                motor.writeMotorBSpeed(y["motorB"])
+            else :
+                motor.writeMotorBSpeed(0)
 
-except Exception as err:
-    
-    r.send(json.dumps({
-        'type': type(err),
-        'args': err.args
-    }))
+    except Exception as err:
+        
+        r.send(json.dumps({
+            'type': type(err),
+            'args': err.args
+        }))
+
+        motor.writeMotorASpeed(0)
+        motor.writeMotorBSpeed(0)
