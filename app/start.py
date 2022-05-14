@@ -1,10 +1,10 @@
-from machine import Pin, SoftI2C
+from machine import Pin, SoftI2C, WDT
 import time
 import json
 from app.radio import Radio
 r = Radio()
 
-wdt = machine.WDT(timeout=60000)  # enable it with a timeout of 60s
+wdt = WDT(timeout=60000)  # enable it with a timeout of 60s
 
 while True:
 
@@ -40,11 +40,11 @@ while True:
             if "motorA" in y:
                 print(y["motorA"])
                 motor.writeMotorASpeed(y["motorA"])
-            else :
+            else:
                 motor.writeMotorASpeed(0)
             if "motorB" in y:
                 motor.writeMotorBSpeed(y["motorB"])
-            else :
+            else:
                 motor.writeMotorBSpeed(0)
 
     except Exception as err:
