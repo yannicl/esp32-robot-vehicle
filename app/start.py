@@ -56,6 +56,3 @@ while True:
             'type': type(err),
             'args': err.args
         }))
-
-        motor.writeMotorASpeed(0)
-        motor.writeMotorBSpeed(0)
