@@ -14,12 +14,10 @@ while True:
         i2c = SoftI2C(scl=Pin(22), sda=Pin(21), freq=100000)
         i2c.scan()
 
-        #from third_party import VL53L0X
-        #tof = VL53L0X.VL53L0X(i2c)
-
-        #tof.set_Vcsel_pulse_period(tof.vcsel_period_type[0], 18)
-
-        #tof.set_Vcsel_pulse_period(tof.vcsel_period_type[1], 14)
+        from third_party import VL53L0X
+        tof = VL53L0X.VL53L0X(i2c)
+        tof.set_Vcsel_pulse_period(tof.vcsel_period_type[0], 18)
+        tof.set_Vcsel_pulse_period(tof.vcsel_period_type[1], 14)
 
 
         #while True:
@@ -46,6 +44,11 @@ while True:
                 motor.writeMotorBSpeed(y["motorB"])
             else:
                 motor.writeMotorBSpeed(0)
+
+            dist = tof.read()
+            r.send(json.dumps({
+            'distance': dist
+            }))
 
     except Exception as err:
         
