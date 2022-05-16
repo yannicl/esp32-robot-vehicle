@@ -44,8 +44,10 @@ while True:
                 motor.writeMotorBSpeed(y["motorB"])
             else:
                 motor.writeMotorBSpeed(0)
-
+            
+            tof.start()
             dist = tof.read()
+            tof.stop()
             r.send(json.dumps({
             'distance': dist
             }))
